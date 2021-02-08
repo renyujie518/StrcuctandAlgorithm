@@ -6,5 +6,5 @@ package sort;/**
  * @createTime 2021年02月08日 14:38:00
  */
 public class quick {
-    //
+    ////
 }
