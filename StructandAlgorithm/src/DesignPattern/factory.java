@@ -8,5 +8,5 @@ package DesignPattern;
  * @createTime 2021年02月08日 15:16:00
  */
 public class factory {
-    //////
+    //////11
 }
