@@ -1,4 +1,4 @@
-package 排序;/**
+package sort;/**
  * @ClassName quick.java
  * @author admin
  * @version 1.0.0
