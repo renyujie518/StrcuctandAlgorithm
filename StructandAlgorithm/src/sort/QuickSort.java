@@ -101,13 +101,14 @@ public class QuickSort {
         int more = R;// 这里将 大于区域的范围 直接定位到 right
         //这与 荷兰国旗不同了 ，我不传入划分值了，arrs[R]就是划分值（）,同时我也不设定指针p了，L就是p
         while (L < more) {
-            // 小于 num 的情况
+            // 小于 num 的情况。实际上是当前值与小于区域的下一个元素先交换，然后边界扩充把它包进去，指针再右移 swap(nums, i, less);less++;i++;
             if (arrs[L] < arrs[R]) {
                 swap(arrs, ++less, L++);
-                // 大于 num 的情况，此时 left 需要留在原地，继续考察与 num 的大小关系
+                // 大于 num 的情况，此时 指针left 需要留在原地，继续考察与 num 的大小关系
+                //实际上是当前值与大于区域的下一个元素先交换，然后边界扩充把它包进去，指针不动 swap(nums, i, more);more--;i;
             } else if (arrs[L] > arrs[R]) {
                 swap(arrs, --more, L);
-                // 等于 num 的情况
+                // 等于 num 的情况,指针left直接++
             } else {
                 L++;
             }
