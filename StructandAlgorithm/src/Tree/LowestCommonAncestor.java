@@ -40,7 +40,7 @@ public class LowestCommonAncestor {
         HashMap<TreeNode, TreeNode> fatherMap = new HashMap<>();
         fatherMap.put(head,head);//头结点的父还是自己
         processFindFather(head,fatherMap);  //对这个map操作，里面 key:该节点  value: 该节点的父
-        HashSet<TreeNode> set = new HashSet<>();  //设立一个Set，里面存放一条父链  为什么用set，因为可以foreach
+        HashSet<TreeNode> set = new HashSet<>();  //设立一个Set，里面存放一条父链  为什么用set，因为保证唯一性
         TreeNode curr = o1;
         //先把curr放到set里 因为有可能o1就是o2的父节点
         set.add(curr);

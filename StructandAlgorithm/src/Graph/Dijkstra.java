@@ -64,4 +64,12 @@ public class Dijkstra {
         return minNode;  //要是返回null，就是代表所有节点都考虑过了，都被锁住了。29行的while终止
     }
 
+
+
+    //改进后的D算法(改写小根堆)  今日有面试，日后补
+    //从head出发，所有head能达到的节点，生成到达每个节点的最小记录并返回
+//    public static  HashMap<Node,Integer> dijkstra2(Node head,int size){
+//
+//    }
+
 }
