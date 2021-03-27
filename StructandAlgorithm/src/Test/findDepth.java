@@ -8,7 +8,7 @@ import java.util.List;
  * @author admin
  * @version 1.0.0
  * @ClassName findDepth.java
- * @Description TODO
+ * @Description 阿里笔试题 找到一个多维数组的维度
  * @createTime 2021年03月16日 00:00:00
  */
 public class findDepth {
