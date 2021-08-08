@@ -8,9 +8,9 @@ package LinkedList;
  * @createTime 2021年02月26日 14:26:00
  */
 public class ListNode {
-     int val;
-     ListNode next;
-     ListNode() {}
-     ListNode(int val) { this.val = val; }
+     public int val;
+     public ListNode next;
+     public ListNode() {}
+     public ListNode(int val) { this.val = val; }
      ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  }

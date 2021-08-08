@@ -1,0 +1,44 @@
+MySql数据库查询同时选修了两门课的学生姓名、学号
+这个查询要用到含有学生姓名、学号的表和含有学生选课情况的表，
+
+我定义的含有学生姓名sname和学号sno的表是student表（sno学号，sname姓名，sdept专业，sage年龄，ssex性别）
+含有学生选课情况的表是sc表（sno学号，cno选修课程号，grade成绩),。
+
+假设查询选修课程为2和3的学生姓名和学号，方法如下：
+集合查询
+where语句下的and不能用于连接两个相同属性的查询，如该题不能写为where cno=‘002’ and cno=‘003’ 。
+所以首先要从sc表查询选修课程为2号（或者3号）的学生学号，然后用and连接查询课程号为2号（或3号）的课程：
+
+ WHERE sc.sno IN
+              ( SELECT sno FROM sc
+              	 WHERE cno='002'
+                 AND sno IN             // ---+
+              	   ( SELECT sno FROM sc //    |查询选课课号为3的学生学号
+                     WHERE cno='003'    // ---+
+                   )
+               ）
+
+以上为在sc表中查询出选修课程为2号和3号的学生学号，然后，我们要将查询出来的学号集合和student表结合，在student表中找出和以上查询出的学生学号相同的学生，最后输出其学号和姓名。
+因此，总的查询语句为：
+
+SELECT student.sno,sname FROM student,sc
+  WHERE sc.sno IN
+                  ( SELECT sno FROM sc
+                  	 WHERE cno='002'
+                  	AND sno IN             //  ---+
+                  	   ( SELECT sno FROM sc//     |查询选课课号为3的学生学号
+                         WHERE cno='003'   //  ---+
+                       )
+                   ）AND student.sno=sc.sno
+                   group by student.sno;
+因为两个表中都有学号sno属性，所以要表明所要查询的学号出自哪个表，最后按学号分组，以免重复出现同一名学生的信息。
+输出结果如图所示：
+
++-------+-------+
+| sno   | sname |
++-------+-------+
+| 08001 | 张力  |
+| 08002 | 李丽  |
+| 08003 | 赵海  |
++-------+-------+
+3 rows in set

@@ -87,4 +87,55 @@ public class SerializeBinaryTrees {
     }
 
 
+    //这里补充序列化和反序列化bfs的做法
+    //序列化
+    public static String serialize(TreeNode root){
+        if(root == null){
+            return "[]";
+        }
+        StringBuilder result = new StringBuilder("[");
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            TreeNode curr = queue.poll();
+            if(curr!=null){
+                result.append(curr.val+",");
+                queue.add(curr.left);
+                queue.add(curr.right);
+            }else{
+                result.append("null,");
+            }
+        }
+        result.deleteCharAt(result.length()-1);
+        result.append("]");
+        return result.toString();
+    }
+
+    //反序列化
+    public static TreeNode unserilaize(String data) {
+        if (data.equals("[]")) {
+            return null;
+        }
+        int index = 1;
+        String[] dataChar = data.substring(1, data.length() - 1).split(",");
+        TreeNode root = new TreeNode(new Integer(dataChar[0]));
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            TreeNode curr = queue.poll();
+            if (!dataChar[index].equals("[]")) {
+                curr.left = new TreeNode(new Integer(dataChar[index]));
+                queue.add(curr.left);
+            }
+            index++;
+            if (!dataChar[index].equals("[]")) {
+                curr.right = new TreeNode(new Integer(dataChar[index]));
+                queue.add(curr.right);
+            }
+            index++;
+        }
+        return root;
+    }
+
+
 }
