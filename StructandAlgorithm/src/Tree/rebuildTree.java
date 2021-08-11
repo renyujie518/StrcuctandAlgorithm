@@ -1,6 +1,8 @@
 package Tree;
 
 
+import java.util.HashMap;
+
 import static util.printArray.printArray;
 
 /**
@@ -25,14 +27,19 @@ public class rebuildTree {
         }
         int len = pre.length;
         int[] pos = new int[len];
-        process1(pre, in, pos, 0, len - 1, 0, len - 1, 0, len - 1);
+        HashMap<Integer, Integer> inMAp = new HashMap<>();
+        for (int i = 0; i < in.length; i++) {
+            inMAp.put(in[i], i);
+        }
+        process1(pre, in, pos, 0, len - 1, 0, len - 1, 0, len - 1,inMAp);
         return pos;
     }
 
     public static void process1(int[] pre, int[] in, int[] pos,
                                 int prei, int prej,
                                 int ini, int inj,
-                                int posi, int posj) {
+                                int posi, int posj,
+                                HashMap<Integer, Integer> inMAp) {
         //有越界了直接return
         if (prei > prej) {
             return;
@@ -45,18 +52,21 @@ public class rebuildTree {
         //首先把前序的头放到后序的尾
         pos[posj] = pre[prei];
         //找到被放置的元素在中序中的哪里
+        Integer find = inMAp.get(pre[prei]);
+        /**  这里可以优化  不必要每次都要循环，可以用hashMap记录中序中index对应的值
         int find = ini;
         for (; find <= inj; find++) {
             if (in[find] == pre[prei]) {
                 break;
             }
         }
+         **/
         //在这里记住一句口诀 两个process操作左右树 下标是操作哪些数是对应的左/右树
         //此时find - ini相当于操作这么多数当做左树
         //prei+1的原因是之前操作过"把前序的头放到后序的尾"
-        process1(pre, in, pos, prei + 1, prei + (find - ini), ini, find - 1, posi, posi + (find - ini) - 1);
+        process1(pre, in, pos, prei + 1, prei + (find - ini), ini, find - 1, posi, posi + (find - ini) - 1, inMAp);
         //哪些下标对应的是右树
-        process1(pre, in, pos, prei + (find - ini) + 1, prej, find + 1, inj, posi + (find - ini), posj - 1);
+        process1(pre, in, pos, prei + (find - ini) + 1, prej, find + 1, inj, posi + (find - ini), posj - 1, inMAp);
     }
 
     public static void main(String[] args) {
