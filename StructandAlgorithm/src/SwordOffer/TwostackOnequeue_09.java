@@ -16,7 +16,7 @@ import java.util.Stack;
  * 先进入的元素先退出，这就是队列的顺序。
  * @createTime 2021年08月17日 19:43:00
  */
-public class TwostackOnequeue {
+public class TwostackOnequeue_09 {
     private static Stack<Integer> in = new Stack<Integer>();
     private static Stack<Integer> out = new Stack<Integer>();
 
