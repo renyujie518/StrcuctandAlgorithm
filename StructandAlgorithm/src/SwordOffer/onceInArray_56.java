@@ -1,5 +1,8 @@
 package SwordOffer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author renyujie518
  * @version 1.0.0
@@ -18,7 +21,7 @@ package SwordOffer;
 在每个组内进行异或操作，得到两个数字
  */
 public class onceInArray_56 {
-    public int[] singleNumbers(int[] nums) {
+    public int[] singleNumbers1(int[] nums) {
         int x = 0, y = 0;
         int yihuoResult = 0;
         int shouwei1 = 1; //这里看做000...1
@@ -34,5 +37,21 @@ public class onceInArray_56 {
             }
         }
         return new int[] {x, y};
+    }
+
+    //在一个数组 nums 中除一个数字只出现一次之外，其他数字都出现了三次。请找出那个只出现一次的数字。
+    public int singleNumbers2(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        //先把数字存储到map中，其中key存储的是当前数字，value是
+        //数字的出现的次数
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        //最后在遍历map中的所有元素，返回value值等于1的
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getValue() == 1)
+                return entry.getKey();
+        }
+        return -1;
     }
 }
