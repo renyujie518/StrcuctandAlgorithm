@@ -44,8 +44,7 @@ public class fangShu {
         Arrays.sort(booksInt);
         Arrays.sort(thick);
         long res = 1;
-        int point = bookCount - 1;
-        int thicki = bookCount - 1;
+        int point = 0;
         for (int i = 0; i < bookCount; i++) {
             if (booksInt[i] > thick[i]) {
                 System.out.println(0);
@@ -56,7 +55,7 @@ public class fangShu {
             }
             //此时的point指向为第一次出现空位>=书厚度的地方
             //实际上就是在排序后一旦发现对应位置的thick[point] >= booksInt[i]
-            //那么以空位为思考对象，该位置i - point + 1放法
+            //那么以空位为思考对象，该位置i - point + 1
             res = res * (i - point + 1);
             res = res % 100000007;
         }
