@@ -1,6 +1,7 @@
 package SwordOffer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author renyujie518
@@ -12,52 +13,45 @@ import java.util.ArrayList;
  * [9, 10, 11, 12, 13, 14, 15, 16]
  * [18, 19, 20, 21, 22]。
  *
- * 滑动窗口
- * 设连续正整数序列的左边界 i和右边界 j ，则可构建滑动窗口从左向右滑动。
- * 循环中，每轮判断滑动窗口内元素和与目标值 target的大小关系，若相等则记录结果，
- * 若大于 target 则移动左边界 i （以减小窗口内的元素和），若小于 target 则移动右边界 j（以增大窗口内的元素和）。
- *
- *         //l是窗口左边界，r是窗口右边界，窗口中的值一定是连续值。
- *         //这里有个技巧： a+a+1=target，那么a=(target-1)/2，同理，右边界r的最大值为(target+1)/2
- *         //等差和公式是 target = ( 首项+末项 ) * len / 2 , 所以(target*2) mod len == 0 是当前len有效的必要条件，
- *         //所以过滤掉（target*2）%len!=0的len 是第一剪枝
+ * 滑动窗口(左闭右开)
+ * 当窗口的和小于 target 的时候，窗口的和需要增加，所以要扩大窗口，窗口的右边界向右移动
+ * 当窗口的和大于 target 的时候，窗口的和需要减少，所以要缩小窗口，窗口的左边界向右移动
+ * 当窗口的和恰好等于 target 的时候，我们需要记录此时的结果。设此时的窗口为 [i,j)，
+ * 那么我们已经找到了一个 ii开头的序列，也是唯一一个 i 开头的序列，接下来需要找 i+1 开头的序列，所以窗口的左边界要向右移动
  * @createTime 2021年08月27日 21:11:00
  */
 public class sumAsSXuLie_57 {
-    public static int[][] sumAsSXuLie(int target) {
-        ArrayList<int[]> res = new ArrayList<>();
-        int left = 1;
-        int right = 2;
-        int sum = 3;//初始窗口大小为1+2=3
-        while(left <= target / 2){
-            //右
-            if(sum > target){
-                //注意这里的顺序，先减去原先的left，代表把原先的left的值囊括进来，再改变边界值
-                sum -= left;
-                left++;
-            }
-            else{//sum <= target  包含了等于的情况
-                if(sum == target){
-                    res.add(help(left, right));
+    public int[][] sumAsSXuLie(int target) {
+        int i = 1; // 滑动窗口的左边界
+        int j = 1; // 滑动窗口的右边界
+        int sum = 0; // 滑动窗口中数字的和
+        List<int[]> res = new ArrayList<>();
+
+        while (i <= target / 2) {
+            if (sum < target) {
+                // 右边界向右移动
+                sum += j;
+                j++;
+            } else if (sum > target) {
+                // 左边界向右移动
+                sum -= i;
+                i++;
+            } else {
+                // 记录结果
+                int[] arr = new int[j-i];
+                for (int k = i; k < j; k++) {
+                    arr[k-i] = k;
                 }
-
-                //右边界右移会使得sum变大，先移后改sum
-                right++;
-                sum += right;
+                res.add(arr);
+                // 左边界向右移动
+                sum -= i;
+                i++;
             }
         }
-        return res.toArray(new int[0][]);
 
-
+        return res.toArray(new int[res.size()][]);
     }
 
-    private static int[] help(int l, int h) {
-        int[] res = new int[h - l + 1];
-        for (int i = l; i <= h; i++) {
-            res[i - l] = i;
-        }
-        return res;
-    }
 
 
 }
